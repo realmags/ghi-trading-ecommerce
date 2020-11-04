@@ -18,7 +18,7 @@ class ProductsTableSeeder extends Seeder
 
         // create few product records
         for($i = 0; $i < 10; $i++) {
-            $category = '';
+            $category = 'electrical';
             $brand = 'phillips';
             $available = true;
             if($i % 2 == 0) {
@@ -27,9 +27,7 @@ class ProductsTableSeeder extends Seeder
             }
             if($i == 1) $category = 'screws';
             if($i == 5) $category = 'screws';
-            if($i == 7) $category = 'electrical';
             if($i == 9) {
-                $category = 'electrical';
                 $available = false;
             }
             Product::create([

@@ -20,24 +20,28 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// TODO: make route for creating new product record
 
 /*
 * @desc fetch all product records according to category
 */
-Route::get('/products/', [ProductController::class, 'show']);
+Route::get('products/{category_id}', [ProductController::class, 'show']);
+
+/*
+* @desc insert nrew product record
+*/
+Route::post('products/item/', [ProductController::class, 'store']);
 
 /*
 * @desc update a product record
 */
-Route::put('/products/', [ProductController::class, 'update']);
+Route::put('products/item/{product_id}', [ProductController::class, 'update']);
 
 /*
 * @desc delete a product record
 */
-Route::delete('/products/', [ProductController::class, 'delete']);
+Route::delete('products/item/{product_id}', [ProductController::class, 'delete']);
 
 /*
 * @desc fetch all bestsellers
 */
-Route::delete('/products/bestsellers/', [ProductController::class, 'bestsellers']);
+Route::get('products/bestsellers/', [ProductController::class, 'bestsellers']);

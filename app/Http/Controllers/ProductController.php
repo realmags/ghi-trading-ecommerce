@@ -3,51 +3,97 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 class ProductController extends Controller
 {
-    public function show() {
+    /*
+    * @desc fetch all products according to category
+    */
+    public function show($category_id) {
         /*
-        * @desc fetch all products according to category
+        ! fetch product records from database
+        * resolved
+        ! test out update api route
+        * works as intended
+        * think about adding limit to query result
         */
-        $category = \request('category');
-
-        // TODO: fetch product records from database
+        $products = Product::select('product_id', 'category_name', 'brand_name', 'product_name', 'unit_price', 'product_description', 'product_image')
+                            ->join('categories', 'products.category_id', '=', 'categories.category_id')
+                            ->join('brands', 'products.brand_id', '=', 'brands.brand_id')
+                            // ->whereRaw("category_id = $category_id AND is_available = true")
+                            // ->whereRaw("`product`.`category_id` = `$category_id` AND `is_available` = true")
+                            ->where([
+                                ['products.category_id', '=', $category_id],
+                                ['is_available', '=', true]
+                            ])
+                            ->get();
 
         // TODO: handle errors for non-existent resource
 
         return \response()->json([
-            'index' => $category
+            'data' => $products
         ], 200);
     }
 
-    public function update() {
+    /*
+    * @desc add a single product record
+    */
+    public function store(Request $request) {
+        $product = Product::create($request->all());
+
         /*
-        * @desc update a single product record
+        ! create a product record
+        * resolved
+        ! test out update api route
+        * works as intended
         */
-        $product_id = \request('product_id');
-
-        // TODO: update a product record
-
-        // TODO: handle errors for non-existent resource
-
         return \response()->json([
-            'update' => $product_id
+            'message' => "Product has been added to the database.",
+            'data' => $product
         ], 200);
     }
 
-    public function delete() {
+    /*
+    * @desc update a single product record
+    */
+    public function update(Request $request, $product_id) {
         /*
-        * @desc delete a single product record
+        ! update a product record
+        * resolved
+        ! test out update api route
+        * works as intended
         */
-        $product_id = \request('product_id');
-
-        // TODO: update a product record
+        $product = Product::findOrFail($product_id);
+        $product->update($request->all());
 
         // TODO: handle errors for non-existent resource
 
         return \response()->json([
-            'message' => 'product deleted'
+            'message' => "Product with ID $product_id has been updated.",
+            'data' => $product,
+            'request' => $request->all()
+        ], 200);
+    }
+
+    /*
+    * @desc delete a single product record
+    */
+    public function delete($product_id) {
+        /*
+        ! delete a product record
+        * resolved
+        ! test out delete api route
+        */
+        $product = Product::findOrFail($product_id);
+        $product->delete();
+
+        /*
+        ! handle errors for non-existent resource
+        */
+
+        return \response()->json([
+            'message' => "Product with ID $product_id has been deleted."
         ], 204);
     }
 }

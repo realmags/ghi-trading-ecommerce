@@ -3,9 +3,11 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CreateProductsTable extends Migration
 {
+    use SoftDeletes;
     /**
      * Run the migrations.
      *
@@ -34,6 +36,7 @@ class CreateProductsTable extends Migration
             $table->text('product_description');
             $table->string('product_image', 255); //TODO: add default url for product image
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
