@@ -20,14 +20,20 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+/*
+* @desc fetch product records according to category
+* limited
+*/
+Route::get('products/', [ProductController::class, 'index']);
 
 /*
 * @desc fetch all product records according to category
+* paginated
 */
 Route::get('products/{category_id}', [ProductController::class, 'show']);
 
 /*
-* @desc insert nrew product record
+* @desc insert new product record
 */
 Route::post('products/item/', [ProductController::class, 'store']);
 

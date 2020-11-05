@@ -32,7 +32,7 @@ class CreateProductsTable extends Migration
 
             $table->string('product_name', 100);
             $table->unsignedFloat('unit_price');
-            $table->boolean('is_available');
+            $table->boolean('is_available'); // TODO: add default value ->default(0)
             $table->text('product_description');
             $table->string('product_image', 255); //TODO: add default url for product image
             $table->timestamps();

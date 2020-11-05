@@ -8,16 +8,12 @@ use App\Models\Product;
 class ProductController extends Controller
 {
     /*
-    * @desc fetch all products according to category
+    * @desc fetch all products according to category, limited
     */
-    public function show($category_id) {
-        /*
-        ! fetch product records from database
-        * resolved
-        ! test out update api route
-        * works as intended
-        * think about adding limit to query result
-        */
+    public function index() {
+        $category_id = request('category');
+        $query_limit = request('category');
+
         $products = Product::select('product_id', 'category_name', 'brand_name', 'product_name', 'unit_price', 'product_description', 'product_image')
                             ->join('categories', 'products.category_id', '=', 'categories.category_id')
                             ->join('brands', 'products.brand_id', '=', 'brands.brand_id')
@@ -27,13 +23,39 @@ class ProductController extends Controller
                                 ['products.category_id', '=', $category_id],
                                 ['is_available', '=', true]
                             ])
+                            ->limit($query_limit)
                             ->get();
+    }
+
+    /*
+    * @desc fetch all products according to category, paginated
+    */
+    public function show($category_id) {
+        /*
+        ! fetch product records from database
+        * resolved
+        ! test out update api route
+        * works as intended
+        * think about adding limit to query result
+        */
+        $query_limit = 10;
+        $products = Product::select('product_id', 'category_name', 'brand_name', 'product_name', 'unit_price', 'product_description', 'product_image')
+                            ->join('categories', 'products.category_id', '=', 'categories.category_id')
+                            ->join('brands', 'products.brand_id', '=', 'brands.brand_id')
+                            // ->whereRaw("category_id = $category_id AND is_available = true")
+                            // ->whereRaw("`product`.`category_id` = `$category_id` AND `is_available` = true")
+                            ->where([
+                                ['products.category_id', '=', $category_id],
+                                ['is_available', '=', true]
+                            ])
+                            ->paginate($query_limit);
 
         // TODO: handle errors for non-existent resource
 
-        return \response()->json([
-            'data' => $products
-        ], 200);
+        // return \response()->json([
+        //     'data' => $products
+        // ], 200);
+        return $products->toJson();
     }
 
     /*
