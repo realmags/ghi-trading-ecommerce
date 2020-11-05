@@ -3,15 +3,13 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ReactDOM from "react-dom";
 
 // components
-import Header from "./Header";
 
-function App() {
+function App({ assetPath }) {
     return (
         <Router>
             <div className="container">
-                <Header />
                 <Switch>
-                    <Route exact path="/" />
+                    <Route exact path="/admin" />
                 </Switch>
             </div>
         </Router>
@@ -21,5 +19,11 @@ function App() {
 export default App;
 
 if (document.getElementById("app")) {
-    ReactDOM.render(<App />, document.getElementById("app"));
+    const assetPath = document
+        .getElementById("app")
+        .getAttribute("data-assetPath");
+    ReactDOM.render(
+        <App assetPath={assetPath} />,
+        document.getElementById("app")
+    );
 }
