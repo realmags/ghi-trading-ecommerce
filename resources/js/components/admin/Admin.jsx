@@ -1,10 +1,10 @@
 import React from "react";
 import Header from "./Header";
 
-function Admin() {
+function Admin({ assetPath }) {
     return (
         <>
-            <Header />
+            <Header assetPath={assetPath} />
         </>
     );
 }

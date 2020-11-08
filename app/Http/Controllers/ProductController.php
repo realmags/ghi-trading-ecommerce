@@ -8,23 +8,24 @@ use App\Models\Product;
 class ProductController extends Controller
 {
     /*
-    * @desc fetch all products according to category, limited
+    * @desc fetch product info based off search query
     */
     public function index() {
-        $category_id = request('category');
-        $query_limit = request('category');
+        $keyword = request('search');
 
-        $products = Product::select('product_id', 'category_name', 'brand_name', 'product_name', 'unit_price', 'product_description', 'product_image')
+        $products = Product::select('product_id', 'category_name', 'brand_name', 'product_name')
                             ->join('categories', 'products.category_id', '=', 'categories.category_id')
                             ->join('brands', 'products.brand_id', '=', 'brands.brand_id')
-                            // ->whereRaw("category_id = $category_id AND is_available = true")
-                            // ->whereRaw("`product`.`category_id` = `$category_id` AND `is_available` = true")
-                            ->where([
-                                ['products.category_id', '=', $category_id],
-                                ['is_available', '=', true]
-                            ])
-                            ->limit($query_limit)
+                            // ->where([
+                            //     ['products.category_id', '=', $category_id],
+                            //     ['is_available', '=', true]
+                            // ])
+                            ->where('product_name', 'like', "%$keyword%")
+                            ->orWhere('category_name', 'like', "%$keyword%")
+                            ->orWhere('brand_name', 'like', "%$keyword%")
                             ->get();
+
+        return $products->toJson();
     }
 
     /*

@@ -3,13 +3,20 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ReactDOM from "react-dom";
 
 // components
+import Admin from "./admin/Admin";
 
 function App({ assetPath }) {
     return (
         <Router>
-            <div className="container">
+            <div>
                 <Switch>
-                    <Route exact path="/admin" />
+                    <Route exact path="/">
+                        {/* Insert component for landing page */}
+                        <h1>This is the landing page!</h1>
+                    </Route>
+                    <Route path="/admin">
+                        <Admin assetPath={assetPath} />
+                    </Route>
                 </Switch>
             </div>
         </Router>

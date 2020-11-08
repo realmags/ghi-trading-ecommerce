@@ -13,28 +13,31 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
  |
  */
 
-mix.react("resources/js/app.js", "public/js");
+mix.react("resources/js/app.js", "public/js").sass(
+    "resources/sass/admin.scss",
+    "public/css/"
+);
 
-mix.webpackConfig({
-    module: {
-        rules: [
-            {
-                test: /\.s[ac]ss$/,
-                exclude: [],
-                loader: ExtractTextPlugin.extract({
-                    fallback: "style-loader",
-                    use: [
-                        {
-                            loader: "css-loader"
-                        },
-                        {
-                            loader: "sass-loader"
-                        }
-                    ]
-                })
-            }
-        ]
-    },
-    plugins: [new ExtractTextPlugin("[name].css")],
-    devtool: "source-map"
-});
+// mix.webpackConfig({
+//     module: {
+//         rules: [
+//             {
+//                 test: /\.s[ac]ss$/,
+//                 exclude: [],
+//                 loader: ExtractTextPlugin.extract({
+//                     fallback: "style-loader",
+//                     use: [
+//                         {
+//                             loader: "css-loader"
+//                         },
+//                         {
+//                             loader: "sass-loader"
+//                         }
+//                     ]
+//                 })
+//             }
+//         ]
+//     },
+//     plugins: [new ExtractTextPlugin("[name].css")],
+//     devtool: "source-map"
+// });

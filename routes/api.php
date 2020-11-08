@@ -21,8 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 /*
-* @desc fetch product records according to category
-* limited
+* @desc fetch product info based off search query
 */
 Route::get('products/', [ProductController::class, 'index']);
 
