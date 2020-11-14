@@ -1,4 +1,7 @@
 @import "variables";
+@import "header";
+@import "inventory";
+
 // @import "~bootstrap/scss/bootstrap";
 * {
     margin: 0;
@@ -23,119 +26,4 @@ svg {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.header {
-    .header__main {
-        background-color: $light-gray;
-        height: 80px;
-    }
-
-    .header__container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        // * edit max width for container, see fenty
-        max-width: 1280px;
-        padding: 0 10px;
-        margin: auto;
-    }
-
-    .header__logo {
-        img {
-            height: 80px;
-            width: 80px;
-        }
-    }
-
-    .header__link {
-        div {
-            display: flex;
-            align-items: flex-end;
-        }
-
-        p {
-            font-size: $header-font-size;
-            font-weight: bold;
-            color: $red;
-            margin-right: 5px;
-        }
-
-        span {
-            height: $icon-small;
-            fill: $red;
-        }
-    }
-
-    .header__secondary {
-        background: $dark-gray;
-        height: 80px;
-    }
-
-    .header__search {
-        position: relative;
-        // todo: use media queries to make search responsive
-        max-width: 600px;
-        width: 50vw;
-        min-width: 260px;
-
-        input {
-            border: 2px solid $red;
-            height: $search-bar-size;
-            padding: 0 10px;
-            border-radius: 5px;
-            font-family: $font;
-        }
-
-        input:focus ~ button {
-            display: none;
-        }
-
-        button {
-            background: transparent;
-            position: absolute;
-            height: $search-bar-size;
-            padding: 10px;
-            top: 0;
-            right: 0px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            span > svg {
-                // color: $red;
-                fill: $red;
-                width: 20px;
-                height: 20px;
-            }
-        }
-    }
-
-    .result {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        background: white;
-        max-height: 300px;
-        width: 100%;
-        overflow-y: scroll;
-
-        .result__item {
-            padding: 5px 10px;
-            font-size: 0.8rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid $red;
-
-            div {
-                display: flex;
-                flex-direction: column;
-            }
-        }
-
-        .result__name {
-            font-weight: bold;
-        }
-    }
 }

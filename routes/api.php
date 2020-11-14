@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 * @desc fetch product info based off search query
 */
 Route::get('products/', [ProductController::class, 'index']);
+
+/*
+* @desc fetch all category records
+*/
+Route::get('categories/', [CategoryController::class, 'index']);
 
 /*
 * @desc fetch all product records according to category

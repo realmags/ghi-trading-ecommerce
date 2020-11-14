@@ -24,10 +24,10 @@ class CreateProductsTable extends Migration
             // table columns
             $table->bigIncrements('product_id');
             // TODO: add foreign key for category id
-            $table->string('category_id', 100);
+            $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('category_id')->on('categories');
             // TODO: add foreign key for brand id
-            $table->string('brand_id', 100);
+            $table->unsignedBigInteger('brand_id');
             $table->foreign('brand_id')->references('brand_id')->on('brands');
 
             $table->string('product_name', 100);

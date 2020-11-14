@@ -15,27 +15,38 @@ class ProductsTableSeeder extends Seeder
     public function run()
     {
         $faker = \Faker\Factory::create();
+        $max_categories = 7;
+        $max_brand = 9;
+        $product_names = [
+            'Hollow Block',
+            'Deformed Bar',
+            'Table Fan',
+            'Face Shield',
+            'Sanitizing Mat',
+            'Orbit Fan',
+            'Dust Extractor',
+            'Magnetic Screwdriver',
+            'Cutter Blade',
+            'Hacksaw Frame'
+        ];
+        $name_max = \count($product_names) - 1;
 
         // create few product records
         for($i = 0; $i < 10; $i++) {
-            $category = 'electrical';
-            $brand = 'phillips';
-            $available = true;
-            if($i % 2 == 0) {
-                $category = 'paints';
-                $brand = 'boysen';
-            }
-            if($i == 1) $category = 'screws';
-            if($i == 5) $category = 'screws';
-            if($i == 9) {
-                $available = false;
-            }
+            $is_available = true;
+            if($i == 7) $is_available = false;
+            if($i == 9) $is_available = false;
+
+            $brand = \rand(1, $max_brand);
+            $category = \rand(1, $max_categories);
+            $name_index = \rand(0, $name_max);
+
             Product::create([
                 'category_id' => $category,
                 'brand_id' => $brand,
-                'product_name' => $faker->word,
+                'product_name' => $product_names[$name_index],
                 'unit_price' => $faker->randomFloat($nbMaxDecimals = 2, $min = 10, $max = 500),
-                'is_available' => $available,
+                'is_available' => $is_available,
                 'product_description' => $faker->sentence,
                 'product_image' => $faker->imageUrl
             ]);

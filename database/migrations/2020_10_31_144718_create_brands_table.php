@@ -14,7 +14,7 @@ class CreateBrandsTable extends Migration
     public function up()
     {
         Schema::create('brands', function (Blueprint $table) {
-            $table->string('brand_id', 100)->primary();
+            $table->bigIncrements('brand_id');
             $table->string('brand_name', 100);
             $table->timestamps();
         });

@@ -14,10 +14,20 @@ class BrandsTableSeeder extends Seeder
      */
     public function run()
     {
-        $brands = ['phillips', 'boysen', 'xiaomi'];
-        foreach ($brands as  $brand) {
+        $brands = [
+            'Ace',
+            'Lifetime',
+            'Omni',
+            'Dowell',
+            'Bosch',
+            'Firefly',
+            'Dewalt',
+            'Coleman',
+            'Asahi'
+        ];
+
+        foreach ($brands as $brand) {
             Brand::create([
-                'brand_id' => $brand,
                 'brand_name' => \ucfirst($brand)
             ]);
         }

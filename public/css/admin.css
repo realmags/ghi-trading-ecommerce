@@ -1,33 +1,9 @@
-* {
-  margin: 0;
-}
-
-input {
-  width: 100%;
-  display: block;
-}
-
-svg {
-  height: 100%;
-  fill: inherit;
-}
-
-.pd-10 {
-  padding: 0 10px;
-}
-
-.flex-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.header .header__main {
+.header__main {
   background-color: #efefef;
   height: 80px;
 }
 
-.header .header__container {
+.header__container {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -36,41 +12,41 @@ svg {
   margin: auto;
 }
 
-.header .header__logo img {
+.header__logo img {
   height: 80px;
   width: 80px;
 }
 
-.header .header__link div {
+.header__link div {
   display: flex;
   align-items: flex-end;
 }
 
-.header .header__link p {
+.header__link p {
   font-size: 1.2rem;
   font-weight: bold;
   color: #d10d0d;
   margin-right: 5px;
 }
 
-.header .header__link span {
+.header__link span {
   height: 25px;
   fill: #d10d0d;
 }
 
-.header .header__secondary {
+.header__secondary {
   background: #c6c6c6;
   height: 80px;
 }
 
-.header .header__search {
+.header__search {
   position: relative;
   max-width: 600px;
   width: 50vw;
   min-width: 260px;
 }
 
-.header .header__search input {
+.header__search input {
   border: 2px solid #d10d0d;
   height: 35px;
   padding: 0 10px;
@@ -78,11 +54,11 @@ svg {
   font-family: "Century Gothic";
 }
 
-.header .header__search input:focus ~ button {
+.header__search input:focus ~ button {
   display: none;
 }
 
-.header .header__search button {
+.header__search button {
   background: transparent;
   position: absolute;
   height: 35px;
@@ -94,7 +70,7 @@ svg {
   align-items: center;
 }
 
-.header .header__search button span > svg {
+.header__search button span > svg {
   fill: #d10d0d;
   width: 20px;
   height: 20px;
@@ -126,5 +102,92 @@ svg {
 
 .header .result .result__name {
   font-weight: bold;
+}
+
+.inventory__title {
+  text-align: center;
+  margin: 20px 0;
+  text-transform: uppercase;
+  font-size: 1.3rem;
+}
+
+.inventory__cardholder {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.category {
+  width: 140px;
+  height: 150px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.08);
+  margin: 10px;
+  background: white;
+  border-radius: 5px;
+  overflow: hidden;
+  transition: background 0.2s ease-in;
+}
+
+.category:hover {
+  background: #d10d0db3;
+}
+
+.category__card {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  z-index: 10;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  position: relative;
+}
+
+.category__count {
+  position: absolute;
+  top: -30px;
+  left: -15px;
+  font-size: 12rem;
+  line-height: 100%;
+  font-weight: bold;
+  color: #efefef;
+  z-index: -1;
+}
+
+.category__name {
+  font-size: 1.6rem;
+}
+
+.category__action {
+  background: #d10d0d;
+  padding: 3px 10px;
+  color: white;
+  border-radius: 5px;
+}
+
+* {
+  margin: 0;
+}
+
+input {
+  width: 100%;
+  display: block;
+}
+
+svg {
+  height: 100%;
+  fill: inherit;
+}
+
+.pd-10 {
+  padding: 0 10px;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 

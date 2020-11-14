@@ -14,10 +14,18 @@ class CategoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        $categories = ['paints', 'screws', 'electrical'];
+        $categories = [
+            'Tools',
+            'Construction',
+            'Electrical',
+            'Plumbing',
+            'Automotive',
+            'Chemicals',
+            'Wires & Cables'
+        ];
+
         foreach ($categories as  $category) {
             Category::create([
-                'category_id' => $category,
                 'category_name' => \ucfirst($category)
             ]);
         }
