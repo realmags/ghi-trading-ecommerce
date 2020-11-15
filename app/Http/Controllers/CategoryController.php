@@ -8,7 +8,7 @@ use App\Models\Category;
 class CategoryController extends Controller
 {
     /*
-    * @desc fetch all products according to category, paginated
+    * @desc fetch all category records
     */
     public function index() {
         $categories = Category::select('category_id', 'category_name')
