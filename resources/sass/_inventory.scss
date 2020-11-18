@@ -1,32 +1,21 @@
-$mild-shadow: 0px 4px 8px rgba(0, 0, 0, 0.08);
-
-.inventory {
-    &__title {
-        text-align: center;
-        margin: 20px 0;
-        text-transform: uppercase;
-        font-size: 1.3rem;
-    }
-
-    &__cardholder {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-        max-width: 800px;
-        margin: 0 auto;
-    }
-}
+// .inventory__title {
+//     text-align: center;
+//     margin: 20px 0;
+//     text-transform: uppercase;
+//     font-size: 1.3rem;
+// }
 
 .category {
-    width: 140px;
-    height: 150px;
-    box-shadow: $mild-shadow;
-    margin: 10px;
-    background: white;
-    border-radius: 5px;
-    overflow: hidden;
+    // width: $card-width-small;
+    // height: $card-height-small;
+    // box-shadow: $mild-shadow;
+    // margin: 10px;
+    // background: white;
+    // border-radius: 5px;
+    // overflow: hidden;
     // border: 1px solid black;
     transition: background 0.2s ease-in;
+    place-self: center;
 
     &:hover {
         background: #d10d0db3;
@@ -55,7 +44,8 @@ $mild-shadow: 0px 4px 8px rgba(0, 0, 0, 0.08);
     }
 
     &__name {
-        font-size: 1.6rem;
+        font-size: 1.3rem;
+        text-align: center;
     }
 
     &__action {

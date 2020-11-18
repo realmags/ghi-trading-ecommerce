@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useRouteMatch } from "react-router-dom";
 
 function Inventory() {
     const [categories, setCategories] = useState([]);
@@ -17,10 +17,10 @@ function Inventory() {
 
     return (
         <section className="inventory">
-            <div className="inventory__title">
+            <div className="section-title">
                 <h3>Inventory</h3>
             </div>
-            <div className="inventory__cardholder">
+            <div className="max-view">
                 {(function() {
                     if (categories.length === 0) {
                         return (
@@ -44,16 +44,19 @@ function Inventory() {
 }
 
 function CategoryCard({ category, count }) {
+    const { url } = useRouteMatch();
     return (
         // todo: add link tag
-        <div className="category">
-            <div className="category__card">
-                <span className="category__count">{count}</span>
-                <h3 className="category__name">{category.category_name}</h3>
-                <span className="category__action">
-                    <p>View Products</p>
-                </span>
-            </div>
+        <div className="card category">
+            <Link to={`${url}/products/category/${category.category_id}`}>
+                <div className="category__card">
+                    <span className="category__count">{count}</span>
+                    <h3 className="category__name">{category.category_name}</h3>
+                    <span className="category__action">
+                        <p>View Products</p>
+                    </span>
+                </div>
+            </Link>
         </div>
     );
 }

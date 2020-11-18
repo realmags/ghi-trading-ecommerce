@@ -1,6 +1,7 @@
 @import "variables";
 @import "header";
 @import "inventory";
+@import "category";
 
 // @import "~bootstrap/scss/bootstrap";
 * {
@@ -26,4 +27,29 @@ svg {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.max-view {
+    max-width: 800px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    padding: 0 10px;
+}
+
+.section-title {
+    text-align: center;
+    margin: 20px 0;
+    text-transform: uppercase;
+    font-size: 1.3rem;
+}
+
+.card {
+    width: $card-width-small;
+    height: $card-height-small;
+    box-shadow: $mild-shadow;
+    margin: 10px;
+    background: white;
+    border-radius: 5px;
+    overflow: hidden;
 }
