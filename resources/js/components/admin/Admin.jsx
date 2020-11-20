@@ -9,6 +9,7 @@ import {
 import Header from "./Header";
 import Inventory from "./Inventory";
 import CategoryPage from "./CategoryPage";
+import AddMenu from "./AddMenu";
 
 function Admin({ assetPath }) {
     const { path, url } = useRouteMatch();
@@ -21,6 +22,7 @@ function Admin({ assetPath }) {
                     <Inventory />
                     <h3>test route</h3>
                     <Link to={`${url}/products/category/3`}>test</Link>
+                    <AddMenu />
                 </Route>
 
                 {/* @desc route to show products according to a category */}

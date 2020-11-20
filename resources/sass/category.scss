@@ -1,4 +1,5 @@
 $icon-size: 40px;
+$add-container-size: 65px;
 
 .back-button {
     display: flex;
@@ -103,4 +104,63 @@ $icon-size: 40px;
         fill: white;
         height: $icon-size * 0.5;
     }
+}
+
+// ADD MENU STYLES
+.add__container {
+    $add-button-size: 55px;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    max-width: 1280px;
+    width: 100vw;
+    height: $add-container-size;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    // background: blue;
+
+    .add__button {
+        position: relative;
+        height: $add-button-size;
+        width: $add-button-size;
+        border-radius: 50%;
+        background: $red;
+        box-shadow: $mild-shadow;
+
+        span {
+            transition: transform 0.2s ease;
+        }
+
+        span > svg {
+            fill: white;
+            height: $add-button-size * 0.8;
+        }
+    }
+
+    .add__dropdown {
+        position: absolute;
+        bottom: $add-container-size;
+        right: 10px;
+    }
+
+    .add__item {
+        padding: 10px;
+        font-weight: bold;
+        color: white;
+        background: $red;
+        box-shadow: $mild-shadow;
+        border-radius: 5px;
+        margin: 10px 0;
+    }
+}
+
+.add--rotate {
+    transform: rotate(45deg) scale(0.8);
+}
+
+.clickable {
+    cursor: pointer;
 }

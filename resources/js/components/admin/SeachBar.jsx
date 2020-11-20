@@ -102,4 +102,24 @@ function SearchBar() {
     );
 }
 
+function SearchResult(props) {
+    return <div className="result">{props.children}</div>;
+}
+
+function ResultItem({ product }) {
+    return (
+        <div className="result__item">
+            <div>
+                <span className="result__name">{product.product_name}</span>
+                <span className="result__brand">{product.brand_name}</span>
+            </div>
+            <div>
+                <span className="result__category">
+                    in {product.category_name}
+                </span>
+            </div>
+        </div>
+    );
+}
+
 export default SearchBar;
