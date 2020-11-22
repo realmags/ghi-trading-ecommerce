@@ -7,9 +7,10 @@ import {
     useParams
 } from "react-router-dom";
 import Header from "./Header";
-import Inventory from "./Inventory";
-import CategoryPage from "./CategoryPage";
+import InventorySection from "./InventorySection";
+import CategorySection from "./CategorySection";
 import AddMenu from "./AddMenu";
+import DetailsSection from "./DetailsSection";
 
 function Admin({ assetPath }) {
     const { path, url } = useRouteMatch();
@@ -19,20 +20,22 @@ function Admin({ assetPath }) {
             <Switch>
                 {/* @desc index for admin dashboard */}
                 <Route exact path={path}>
-                    <Inventory />
+                    <InventorySection />
                     <h3>test route</h3>
-                    <Link to={`${url}/products/category/3`}>test</Link>
+                    <Link to={`${url}/products/item/add`}>test</Link>
                     <AddMenu />
                 </Route>
 
-                {/* @desc route to show products according to a category */}
+                {/* @desc show products according to a category */}
                 <Route path={`${path}/products/category/:category_id`}>
-                    <CategoryPage />
+                    <CategorySection />
                 </Route>
 
-                {/* <Route path={`${path}/category/:category_id`}>
-                    <h3>product listing for each category</h3>
-                </Route> */}
+                {/* @desc page to add a new product record */}
+                <Route path={`${path}/products/item/add`}>
+                    <DetailsSection />
+                </Route>
+
                 {/* <Route path={`${path}/product/add`}>
                     <h3>add new product record</h3>
                 </Route>

@@ -2,6 +2,7 @@
 @import "header";
 @import "inventory";
 @import "category";
+@import "details";
 
 // @import "~bootstrap/scss/bootstrap";
 * {
@@ -17,6 +18,10 @@ svg {
     // width: 100%;
     height: 100%;
     fill: inherit;
+}
+
+form {
+    width: 100%;
 }
 
 .pd-10 {

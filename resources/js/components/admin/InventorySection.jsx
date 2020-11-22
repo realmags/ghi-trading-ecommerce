@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useRouteMatch } from "react-router-dom";
 
-function Inventory() {
+function InventorySection() {
     const [categories, setCategories] = useState([]);
     const CATEGORIES_ENDPOINT = "/api/categories/";
 
@@ -61,4 +61,4 @@ function CategoryCard({ category, count }) {
     );
 }
 
-export default Inventory;
+export default InventorySection;

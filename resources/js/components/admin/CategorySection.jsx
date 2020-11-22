@@ -2,24 +2,12 @@ import React from "react";
 import { useParams, useRouteMatch } from "react-router";
 import { Link } from "react-router-dom";
 
-function CategoryPage() {
+function CategorySection() {
     const { category_id } = useParams();
     const { url } = useRouteMatch();
     return (
         <section className="category-page">
-            <Link to={"/admin"}>
-                <div className="back-button">
-                    <span>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 192 512"
-                        >
-                            <path d="M192 127.338v257.324c0 17.818-21.543 26.741-34.142 14.142L29.196 270.142c-7.81-7.81-7.81-20.474 0-28.284l128.662-128.662c12.599-12.6 34.142-3.676 34.142 14.142z" />
-                        </svg>
-                    </span>
-                    <p>Back</p>
-                </div>
-            </Link>
+            <BackButton />
             <div className="section-title">
                 <h3>{category_id} fetch category name</h3>
             </div>
@@ -35,6 +23,24 @@ function CategoryPage() {
                 />
             </div>
         </section>
+    );
+}
+
+export function BackButton() {
+    return (
+        <div className="back-button">
+            <Link to={"/admin"}>
+                <span>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 192 512"
+                    >
+                        <path d="M192 127.338v257.324c0 17.818-21.543 26.741-34.142 14.142L29.196 270.142c-7.81-7.81-7.81-20.474 0-28.284l128.662-128.662c12.599-12.6 34.142-3.676 34.142 14.142z" />
+                    </svg>
+                </span>
+                <p>Back</p>
+            </Link>
+        </div>
     );
 }
 
@@ -101,4 +107,4 @@ function ProductCard({ product }) {
     }
 }
 
-export default CategoryPage;
+export default CategorySection;
