@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
+import { getSearchResults } from "./controller";
 
 function SearchBar() {
     const [searchResults, setSearchResults] = useState(null);
@@ -17,7 +18,12 @@ function SearchBar() {
     const ITEM_NOT_FOUND = {
         product_name: "Not found",
         category_name: "Any Category",
-        brand_name: "Brand"
+        brand_name: ""
+    };
+    const ERROR_RESULT = {
+        product_name: "Cannot retrieve data",
+        category_name: "Any category",
+        brand_name: ""
     };
 
     const activateSearch = e => {
@@ -42,19 +48,17 @@ function SearchBar() {
         };
     };
 
-    const fetchSearchItems = () => {
-        const search = searchInputRef.current.value;
-        if (search.length < 3) {
-            // console.log("query is too short");
+    const fetchSearchItems = async () => {
+        const queryParameter = searchInputRef.current.value;
+
+        // @desc query must be at least 3 characters
+        if (queryParameter.length < 3) {
             return;
         }
 
-        axios.get(`${SEARCH_ENDPOINT}${search}`).then(
-            response => {
-                setSearchResults(response.data);
-            },
-            error => alert(`Oops! An error ${error} occured.`)
-        );
+        const searchResponse = await getSearchResults(queryParameter);
+        if (searchResponse.error) return setSearchResults([ERROR_RESULT]);
+        setSearchResults(searchResponse.data);
     };
 
     return (

@@ -62,56 +62,62 @@ $radio-size: 1.5rem;
     }
 }
 
-.radio {
-    font-size: $radio-size;
-    color: $red;
-    display: grid;
-    grid-template-columns: min-content auto;
-    gap: 0.5rem;
-    place-items: center;
-}
+// .radio {
+//     font-size: $radio-size;
+//     color: $red;
+//     display: grid;
+//     grid-template-columns: min-content auto;
+//     gap: 0.5rem;
+//     place-items: center;
+// }
 
-.radio__label {
-    color: black !important;
-    font-size: 1rem !important;
-    line-height: 1;
-    transform: translateY(-0.05rem);
-}
+// .radio__label {
+//     // color: black !important;
+//     // font-size: 1rem !important;
+//     line-height: 1;
+//     transform: translateY(-0.05rem);
+// }
 
-.radio__input {
-    display: flex;
+// .radio__input {
+//     display: flex;
 
-    input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-        font-size: 1rem;
+//     input {
+//         opacity: 0;
+//         width: 0;
+//         height: 0;
+//         font-size: 1rem;
 
-        & + .radio__control::before {
-            content: "";
-            width: $radio-size * 0.6;
-            height: $radio-size * 0.6;
-            box-shadow: inset 0.5em 0.5em currentColor;
-            border-radius: 50%;
-            transition: 180ms transform ease-in-out;
-            transform: scale(0);
-        }
+//         & + .radio__control::before {
+//             content: "";
+//             width: $radio-size * 0.6;
+//             height: $radio-size * 0.6;
+//             box-shadow: inset 0.5em 0.5em currentColor;
+//             border-radius: 50%;
+//             transition: 180ms transform ease-in-out;
+//             transform: scale(0);
+//         }
 
-        &:checked + .radio__control::before {
-            transform: scale(1);
-        }
+//         &:checked {
+//             opacity: 1;
+//             width: 10px;
+//             height: 10px;
+//         }
 
-        &:focus + .radio__control {
-            box-shadow: 0 0 0 0.05em #fff, 0 0 0.15em 0.1em currentColor;
-        }
-    }
+//         &:checked + .radio__control::before {
+//             transform: scale(1);
+//         }
 
-    .radio__control {
-        display: grid;
-        place-items: center;
-        width: 1em;
-        height: 1em;
-        border-radius: 50%;
-        border: 0.1em solid currentColor;
-    }
-}
+//         &:focus + .radio__control {
+//             box-shadow: 0 0 0 0.05em #fff, 0 0 0.15em 0.1em currentColor;
+//         }
+//     }
+
+//     .radio__control {
+//         display: grid;
+//         place-items: center;
+//         width: 1em;
+//         height: 1em;
+//         border-radius: 50%;
+//         border: 0.1em solid currentColor;
+//     }
+// }

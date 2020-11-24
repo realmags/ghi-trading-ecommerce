@@ -11,7 +11,7 @@ function InventorySection() {
             response => {
                 setCategories(response.data);
             },
-            error => alert(error)
+            error => console.log(error)
         );
     }, []);
 
