@@ -1,7 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { BackButton } from "./CategorySection";
 import CreatableSelect from "react-select/creatable";
-import { getCategories, getBrands, useFormFields } from "./controller";
+import {
+    getCategories,
+    getBrands,
+    useFormFields,
+    useSelectStates
+} from "./controller";
 import {
     Radio,
     RadioGroup,
@@ -22,29 +27,33 @@ function DetailsSection() {
         changeHandlerInput,
         changeHandlerSelect
     } = useFormFields({
-        category: {},
-        brand: {},
+        category_id: null,
+        brand_id: null,
         product_name: "",
         unit_price: 0,
         is_available: true,
         product_description: "",
         product_image: ""
     });
-    const [options, setOptions] = useState({
-        categoryOptions: [],
-        brandsOptions: []
-    });
     const classes = useStyles();
+    const { selectStates, createHandler, updateSelectStates } = useSelectStates(
+        {
+            categoryOptions: [],
+            brandOptions: [],
+            isLoading: true
+        }
+    );
 
     // @desc extracts raw options from server response
     const extractOptions = response => {
-        let options = [
-            {
-                label: "Unable to retrieve data",
-                value: "server error",
-                __isError__: true
-            }
-        ];
+        // let options = [
+        //     {
+        //         label: "Unable to retrieve data",
+        //         value: "server error",
+        //         __isError__: true
+        //     }
+        // ];
+        let options = [];
         const { data, error } = response;
 
         if (error) return options;
@@ -69,22 +78,36 @@ function DetailsSection() {
         })
     };
 
-    useEffect(() => {
-        let categoriesResponse, brandsResponse;
-        const fetchOptions = async () => {
-            // TODO: PROMISE ALL THIS PART
+    const fetchOptions = async () => {
+        // TODO: PROMISE ALL THIS PART
+        try {
+            let categoriesResponse, brandsResponse;
             categoriesResponse = await getCategories();
             brandsResponse = await getBrands();
 
             const categoryOptions = extractOptions(categoriesResponse);
-            const brandsOptions = extractOptions(brandsResponse);
+            const brandOptions = extractOptions(brandsResponse);
 
-            setOptions({ categoryOptions, brandsOptions });
+            return [categoryOptions, brandOptions];
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    useEffect(() => {
+        const awaitFetchOptions = async () => {
+            const [categoryOptions, brandOptions] = await fetchOptions();
+            updateSelectStates({
+                categoryOptions,
+                brandOptions,
+                isLoading: false
+            });
         };
-        fetchOptions();
+        awaitFetchOptions();
         // TODO: Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
     }, []);
 
+    // TODO: CLEAN UP PRICE FIELD, DO NOT ACCEPT NON NUMBER VALUES
     return (
         <section className="details-page">
             <BackButton />
@@ -97,8 +120,11 @@ function DetailsSection() {
                         <p className="form__label">Category</p>
                         <CreatableSelect
                             isClearable
-                            options={options.categoryOptions}
-                            onChange={changeHandlerSelect("category")}
+                            isDisabled={selectStates.isLoading}
+                            isLoading={selectStates.isLoading}
+                            options={selectStates.categoryOptions}
+                            onChange={changeHandlerSelect("category_id")}
+                            onCreateOption={createHandler("categoryOptions")}
                             styles={selectStyles}
                             placeholder="Select or create category"
                         />
@@ -107,8 +133,11 @@ function DetailsSection() {
                         <p className="form__label">Brand</p>
                         <CreatableSelect
                             isClearable
-                            options={options.brandsOptions}
-                            onChange={changeHandlerSelect("brand")}
+                            isDisabled={selectStates.isLoading}
+                            isLoading={selectStates.isLoading}
+                            options={selectStates.brandOptions}
+                            onChange={changeHandlerSelect("brand_id")}
+                            onCreateOption={createHandler("brandOptions")}
                             styles={selectStyles}
                             placeholder="Select or create brand"
                         />
@@ -132,6 +161,7 @@ function DetailsSection() {
                             placeholder="Unit price"
                             onChange={changeHandlerInput("unit_price")}
                             min="0"
+                            required
                         />
                     </section>
                     <section className="form__section">
@@ -194,6 +224,7 @@ function FormInput(props) {
                 id={props.id}
                 placeholder={props.placeholder}
                 onChange={props.onChange(props.name)}
+                required
             />
         </section>
     );

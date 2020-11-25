@@ -40,7 +40,12 @@ export const useFormFields = (initialValues = {}) => {
     };
 
     const changeHandlerSelect = key => newValue => {
-        setFormFields(prev => ({ ...prev, [key]: newValue }));
+        // let value = null;
+        // if (newValue) value = newValue.value;
+        setFormFields(prev => ({
+            ...prev,
+            [key]: newValue ? newValue.value : null
+        }));
     };
 
     return {
@@ -48,4 +53,43 @@ export const useFormFields = (initialValues = {}) => {
         changeHandlerInput,
         changeHandlerSelect
     };
+};
+
+export const useSelectStates = (initialValues = {}) => {
+    const [selectStates, setSelectStates] = useState(initialValues);
+
+    const updateSelectStates = (updates = {}) => {
+        setSelectStates(prev => ({ ...prev, ...updates }));
+    };
+
+    // TODO: HOW TO CAPITALIZE VALUE
+    const createOption = label => ({
+        label,
+        value: label.toLowerCase().replace(/\W/g, "")
+    });
+
+    const createHandler = key => inputValue => {
+        updateSelectStates({ isLoading: true });
+        console.group("option created");
+        console.log("wait a moment...");
+        // TODO: ADD NEW INPUT VALUE TO DATABASE
+        setTimeout(() => {
+            const oldOptions = selectStates[key];
+            const newOption = createOption(inputValue);
+            console.log("new option", newOption);
+            console.log("existing options", oldOptions);
+            console.groupEnd();
+            // setSelectStates(prev => ({
+            //     ...prev,
+            //     isLoading: !prev.isLoading,
+            //     [key]: [...oldOptions, newOption]
+            // }));
+            updateSelectStates({
+                isLoading: false,
+                [key]: [...oldOptions, newOption]
+            });
+        }, 1000);
+    };
+
+    return { selectStates, createHandler, updateSelectStates };
 };
