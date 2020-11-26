@@ -29,7 +29,7 @@ class CreateProductsTable extends Migration
             // TODO: add foreign key for brand id
             $table->unsignedBigInteger('brand_id');
             $table->foreign('brand_id')->references('brand_id')->on('brands');
-
+            $table->unique(['category_id','brand_id','product_name'], 'unique_product');
             $table->string('product_name', 100);
             $table->unsignedFloat('unit_price');
             $table->boolean('is_available'); // TODO: add default value ->default(0)

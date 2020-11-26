@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\BrandController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,21 @@ Route::get('products/', [ProductController::class, 'index']);
 * @desc fetch all category records
 */
 Route::get('categories/', [CategoryController::class, 'index']);
+
+/*
+* @desc insert new category record
+*/
+Route::post('categories/add', [CategoryController::class, 'store']);
+
+/*
+* @desc fetch all brand records
+*/
+Route::get('brands/', [BrandController::class, 'index']);
+
+/*
+* @desc insert new brand record
+*/
+Route::post('brands/add', [BrandController::class, 'store']);
 
 /*
 * @desc fetch all product records according to category

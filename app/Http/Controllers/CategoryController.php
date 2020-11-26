@@ -16,4 +16,13 @@ class CategoryController extends Controller
 
         return $categories->toJson();
     }
+
+    public function store(Request $request) {
+        $category = Category::create($request->all());
+
+        return \response()->json([
+            'data' => $category,
+            'message' => 'New category record added.'
+        ], 200);
+    }
 }
