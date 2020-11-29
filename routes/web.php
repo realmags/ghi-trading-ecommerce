@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,9 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/*
-* @desc wildcard route for all application routes
-*/
-Route::get('/{path?}', function () {
-    return view('index');
+Route::get('/', function () {
+    return view('welcome');
 });
+
+Route::view('/{path?}', 'app');
+
+/*Route::get('/account/manage', [UserController::class,'index']);
+
+Route::get('/account/create', function () {
+    return view('account/create_account');
+});
+
+Route::post('/account/manage', [UserController::class,'store']);*/

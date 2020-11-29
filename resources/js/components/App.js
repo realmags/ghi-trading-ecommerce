@@ -1,29 +1,22 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import ReactDOM from "react-dom";
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Header from './Header';
+import ManageAccount from './admin/ManageAccount';
 
-// components
-
-function App({ assetPath }) {
-    return (
-        <Router>
-            <div className="container">
-                <Switch>
-                    <Route exact path="/admin" />
-                </Switch>
-            </div>
-        </Router>
-    );
+class App extends Component {
+    render() {
+        return (
+            <BrowserRouter>
+                <div>
+                    <Header />
+                    <Switch>
+                        <Route exact path='/accounts' component={ManageAccount} />
+                    </Switch>
+                </div>
+            </BrowserRouter>
+        )
+    }
 }
 
-export default App;
-
-if (document.getElementById("app")) {
-    const assetPath = document
-        .getElementById("app")
-        .getAttribute("data-assetPath");
-    ReactDOM.render(
-        <App assetPath={assetPath} />,
-        document.getElementById("app")
-    );
-}
+ReactDOM.render(<App />, document.getElementById('app'));
