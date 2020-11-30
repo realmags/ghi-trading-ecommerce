@@ -3,8 +3,6 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\ProductController;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,34 +18,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-/*
-* @desc fetch product records according to category
-* limited
-*/
-Route::get('products/', [ProductController::class, 'index']);
+Route::get('accounts/', [UserController::class,'index']); //CHANGED from '/accounts'
 
-/*
-* @desc fetch all product records according to category
-* paginated
-*/
-Route::get('products/{category_id}', [ProductController::class, 'show']);
+Route::get('/account/create', function () {
+    return view('account/create_account');
+});
 
-/*
-* @desc insert new product record
-*/
-Route::post('products/item/', [ProductController::class, 'store']);
-
-/*
-* @desc update a product record
-*/
-Route::put('products/item/{product_id}', [ProductController::class, 'update']);
-
-/*
-* @desc delete a product record
-*/
-Route::delete('products/item/{product_id}', [ProductController::class, 'delete']);
-
-/*
-* @desc fetch all bestsellers
-*/
-Route::get('products/bestsellers/', [ProductController::class, 'bestsellers']);
+Route::post('/account/manage', [UserController::class,'store']);
