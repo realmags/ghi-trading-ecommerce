@@ -33,7 +33,7 @@ class ProductController extends Controller
     */
     public function all($category_id) {
         $query_limit = 10;
-        $products = Product::select('product_id', 'category_name', 'brand_name', 'product_name', 'unit_price', 'product_description', 'product_image')
+        $products = Product::select('product_id', 'category_name', 'brand_name', 'product_name', 'is_available', 'unit_price', 'product_description', 'product_image')
                             ->join('categories', 'products.category_id', '=', 'categories.category_id')
                             ->join('brands', 'products.brand_id', '=', 'brands.brand_id')
                             // ->whereRaw("category_id = $category_id AND is_available = true")

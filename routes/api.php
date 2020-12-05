@@ -33,6 +33,11 @@ Route::get('products/', [ProductController::class, 'index']);
 Route::get('categories/', [CategoryController::class, 'index']);
 
 /*
+* @desc fetch a single category
+*/
+Route::get('categories/{category_id}', [CategoryController::class, 'single']);
+
+/*
 * @desc insert new category record
 */
 Route::post('categories/add', [CategoryController::class, 'store']);

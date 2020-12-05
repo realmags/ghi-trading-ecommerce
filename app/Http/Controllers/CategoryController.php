@@ -17,6 +17,12 @@ class CategoryController extends Controller
         return $categories->toJson();
     }
 
+    public function single($category_id) {
+        $category = Category::findOrFail($category_id);
+
+        return $category->toJson();
+    }
+
     public function store(Request $request) {
         $category = Category::create($request->all());
 

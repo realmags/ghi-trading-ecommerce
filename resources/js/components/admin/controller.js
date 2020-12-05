@@ -36,11 +36,15 @@ export const getSearchResults = axiosRequest({
 // TODO: CONNECT TO INVENTORY SECTION COMPONENT
 export const getCategories = axiosRequest();
 
+export const getCategory = axiosRequest();
+
 // TODO: TEST, USE ASYNC AWAIT FOR IMPLEMENTATION
 export const getBrands = axiosRequest();
 
 // TODO: TEST, USE ASYNC AWAIT FOR IMPLEMENTATION
 export const getProduct = axiosRequest();
+
+export const getProducts = axiosRequest();
 
 // TODO: TEST
 export const addProduct = axiosRequest();

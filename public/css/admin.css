@@ -167,9 +167,9 @@
 
 .product {
   height: 190px !important;
-  width: 150px !important;
   overflow: visible !important;
   position: relative;
+  place-self: center;
 }
 
 .product__card {
@@ -264,6 +264,7 @@
   justify-content: flex-end;
   padding-right: 10px;
   padding-bottom: 10px;
+  z-index: 100;
 }
 
 .add__container .add__button {

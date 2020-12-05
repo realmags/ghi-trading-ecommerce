@@ -1,18 +1,67 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useRouteMatch } from "react-router";
 import { Link } from "react-router-dom";
+import { getProducts, getCategory } from "./controller";
 
 function CategorySection() {
     const { category_id } = useParams();
-    const { url } = useRouteMatch();
+    // const { url } = useRouteMatch();
+    const [categoryState, setCategoryState] = useState({
+        products: [],
+        category: "Category"
+    });
+
+    useEffect(() => {
+        const awaitFetchDetails = async () => {
+            const products = await getProducts({
+                method: "get",
+                url: `/api/products/category/${category_id}`
+            });
+            const category = await getCategory({
+                method: "get",
+                url: `/api/categories/${category_id}`
+            });
+            setCategoryState({
+                products: products.data.data,
+                category: category.data.category_name
+            });
+        };
+        awaitFetchDetails();
+    }, []);
+
     return (
         <section className="category-page">
             <BackButton />
             <div className="section-title">
-                <h3>{category_id} fetch category name</h3>
+                <h3>{categoryState.category}</h3>
             </div>
             <div className="max-view">
-                <ProductCard
+                {categoryState.products.length > 0 ? (
+                    categoryState.products.map((product, index) => (
+                        <ProductCard
+                            product={product}
+                            key={`product-${index}`}
+                        />
+                    ))
+                ) : (
+                    <ProductCard
+                        product={{
+                            product_name: "No result",
+                            product_description: "",
+                            produt_image: "#",
+                            product_price: 108,
+                            product_brand: ""
+                        }}
+                    />
+                )}
+                {/* {product.length > 0 &&
+                    products.map((product, index) => (
+                        <ProductCard
+                            product={product}
+                            key={`product-${index}`}
+                        />
+                    ))} */}
+                {/* <ProductCard
                     product={{
                         product_name: "Toilet Seat",
                         product_description: "This is a test product",
@@ -20,7 +69,7 @@ function CategorySection() {
                         product_price: 108,
                         product_brand: "Boysen"
                     }}
-                />
+                /> */}
             </div>
         </section>
     );
@@ -56,15 +105,15 @@ function ProductCard({ product }) {
                 </div>
                 <div className="product__name">
                     <h4>{product.product_name}</h4>
-                    <p>{product.product_description}</p>
+                    <p>{product.brand_name}</p>
                 </div>
                 <div className="product__price">
-                    <strong>P{product.product_price}</strong>
+                    <strong>P{product.unit_price}</strong>
                 </div>
             </div>
             <EditButton />
             <DeleteButton />
-            {true && <ProductOverlay />}
+            {!product.is_available && <ProductOverlay />}
         </div>
     );
 
