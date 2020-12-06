@@ -14,6 +14,7 @@ const axiosRequest = () => async (config = {}) => {
         return response;
     } catch (error) {
         if (error.response) {
+            console.log(error.response);
             return {
                 data: [],
                 status: error.response.status,
@@ -48,6 +49,8 @@ export const getProducts = axiosRequest();
 
 // TODO: TEST
 export const addProduct = axiosRequest();
+
+export const deleteProduct = axiosRequest();
 
 export const addBrand = axiosRequest();
 

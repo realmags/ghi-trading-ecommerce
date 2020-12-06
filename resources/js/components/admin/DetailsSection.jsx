@@ -205,6 +205,7 @@ function DetailsSection() {
                             placeholder="Unit price"
                             onChange={changeHandlerInput("unit_price")}
                             min="0"
+                            step="0.01"
                             required
                         />
                     </section>
