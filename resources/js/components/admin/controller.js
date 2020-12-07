@@ -52,6 +52,8 @@ export const addProduct = axiosRequest();
 
 export const deleteProduct = axiosRequest();
 
+export const updateProduct = axiosRequest();
+
 export const addBrand = axiosRequest();
 
 export const addCategory = axiosRequest();
@@ -84,8 +86,12 @@ export const extractOptions = (response, key) => {
 export const useFormFields = (initialValues = {}) => {
     const [formFields, setFormFields] = useState(initialValues);
 
+    const updateFormFields = (updates = {}) => {
+        setFormFields(prev => ({ ...prev, ...updates }));
+    };
+
     const changeHandlerInput = key => e => {
-        const value = e.target.value;
+        let value = e.target.value;
 
         if (e.target.type === "number") {
             // * comma is not allowed
@@ -98,20 +104,31 @@ export const useFormFields = (initialValues = {}) => {
             } else e.target.setCustomValidity("");
         }
 
-        setFormFields(prev => ({ ...prev, [key]: value }));
+        if (key === "is_available") {
+            value = value === "true" ? true : false;
+        }
+
+        // setFormFields(prev => ({ ...prev, [key]: value }));
+        updateFormFields({
+            [key]: value
+        });
     };
 
     const changeHandlerSelect = key => newValue => {
-        setFormFields(prev => ({
-            ...prev,
+        // setFormFields(prev => ({
+        //     ...prev,
+        //     [key]: newValue ? newValue.value : null
+        // }));
+        updateFormFields({
             [key]: newValue ? newValue.value : null
-        }));
+        });
     };
 
     return {
         formFields,
         changeHandlerInput,
-        changeHandlerSelect
+        changeHandlerSelect,
+        updateFormFields
     };
 };
 

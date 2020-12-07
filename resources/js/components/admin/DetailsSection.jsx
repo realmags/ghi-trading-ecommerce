@@ -1,10 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useParams } from "react-router";
 import { BackButton } from "./CategorySection";
 import CreatableSelect from "react-select/creatable";
+import AsyncCreatableSelect from "react-select/async-creatable";
 import {
     getCategories,
     getBrands,
     addProduct,
+    getProduct,
+    updateProduct,
     extractOptions,
     useFormFields,
     useSelectStates
@@ -27,13 +31,14 @@ function DetailsSection() {
     const {
         formFields,
         changeHandlerInput,
-        changeHandlerSelect
+        changeHandlerSelect,
+        updateFormFields
     } = useFormFields({
         product_id: null,
-        category_id: "",
-        brand_id: "",
+        category_id: 0,
+        brand_id: 0,
         product_name: "",
-        unit_price: 0,
+        unit_price: null,
         is_available: true,
         product_description: "",
         product_image: ""
@@ -43,33 +48,15 @@ function DetailsSection() {
         {
             categoriesOption: [],
             brandsOption: [],
-            isLoading: true
+            isLoading: true,
+            defaultCategory: {
+                label: "Category",
+                value: "0"
+            },
+            defaultBrand: {}
         }
     );
-
-    // @desc extracts raw options from server response
-    // const extractOptions = (response, key) => {
-    //     let options = [];
-    //     const { data, status } = response;
-
-    //     // response came with an error
-    //     if (status !== 200) return options;
-    //     // no data
-    //     if (data.length === 0) return options;
-
-    //     options = data.reduce(
-    //         (optionsArray, currentItem) => [
-    //             ...optionsArray,
-    //             {
-    //                 label: currentItem[`${key}_name`],
-    //                 value: currentItem[`${key}_id`]
-    //             }
-    //         ],
-    //         []
-    //     );
-
-    //     return options;
-    // };
+    const { product_id } = useParams();
 
     // @desc custom styles for react select
     const selectStyles = {
@@ -105,6 +92,40 @@ function DetailsSection() {
         }
     };
 
+    const fetchDefault = async () => {
+        // fetch product
+        try {
+            const response = await getProduct({
+                method: "get",
+                url: `/api/products/item/${product_id}`
+            });
+            const { data } = response;
+            // return data.data;
+            const defaultState = {
+                product_id: data.product_id,
+                category_id: data.category_id,
+                brand_id: data.brand_id,
+                product_name: data.product_name,
+                unit_price: data.unit_price,
+                is_available: data.is_available,
+                product_description: data.product_description,
+                product_image: data.product_image
+            };
+            const defaultCategory = {
+                label: data.category_name,
+                value: data.category_id
+            };
+            const defaultBrand = {
+                label: data.brand_name,
+                value: data.brand_id
+            };
+            console.log("default state from fetchDefault", defaultState);
+            return [defaultState, defaultCategory, defaultBrand];
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     const resetFormFields = () => {
         const inputFields = Array.from(
             document.querySelectorAll(".form__section > input")
@@ -113,6 +134,8 @@ function DetailsSection() {
     };
 
     const onFormSubmit = async e => {
+        let response, message, alertMessage;
+
         e.preventDefault();
 
         // check if category_id is empty
@@ -121,35 +144,59 @@ function DetailsSection() {
         // check if brand_id is empty
         if (!formFields.brand_id) return alert("Brand is required");
 
-        console.log("saving record...");
-        const response = await addProduct({
-            method: "post",
-            url: "/api/products/item/add",
-            data: formFields
-        });
+        if (product_id) {
+            // console.log('updating record...');
+            message = "updating record...";
+            alertMessage = "You have successfully UPDATED a product record.";
+            response = await updateProduct({
+                method: "put",
+                url: `/api/products/item/update/${product_id}`,
+                data: formFields
+            });
+        } else {
+            message = "saving record...";
+            alertMessage = "You have successfully ADDED a product record.";
+            response = await addProduct({
+                method: "post",
+                url: "/api/products/item/add",
+                data: formFields
+            });
+        }
+
+        console.log(message);
         if (response.status === 200) {
-            alert("Product added!");
+            alert(alertMessage);
             resetFormFields();
         } else alert(`Error! ${response.message}`);
     };
 
     useEffect(() => {
-        const awaitFetchOptions = async () => {
+        const setDetailsSectionStates = async () => {
             const [categoriesOption, brandsOption] = await fetchOptions();
+            let defaultBrand = {},
+                defaultCategory = {},
+                defaultState = {};
+            // console.log("product_id params", product_id);
+            if (product_id) {
+                [
+                    defaultState,
+                    defaultCategory,
+                    defaultBrand
+                ] = await fetchDefault();
+                // console.log(defaultState);
+                updateFormFields(defaultState);
+            }
+
             updateSelectStates({
                 categoriesOption,
                 brandsOption,
+                defaultBrand,
+                defaultCategory,
                 isLoading: false
             });
         };
-        awaitFetchOptions();
+        setDetailsSectionStates();
         // TODO: Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
-
-        // const reactSelect = Array.from(
-        //     document.querySelectorAll(".css-b8ldur-Input input")
-        // );
-        // console.log(reactSelect);
-        // reactSelect.forEach(input => (input.required = true));
     }, []);
 
     return (
@@ -171,6 +218,11 @@ function DetailsSection() {
                             onCreateOption={createHandler("categories")}
                             styles={selectStyles}
                             placeholder="Select or create category"
+                            value={
+                                selectStates.categoriesOption[
+                                    formFields.category_id - 1
+                                ] || null
+                            }
                         />
                     </section>
                     <section className="form__section">
@@ -184,6 +236,11 @@ function DetailsSection() {
                             onCreateOption={createHandler("brands")}
                             styles={selectStyles}
                             placeholder="Select or create brand"
+                            value={
+                                selectStates.brandsOption[
+                                    formFields.brand_id - 1
+                                ] || null
+                            }
                         />
                     </section>
                     <FormInput
@@ -193,6 +250,7 @@ function DetailsSection() {
                         placeholder="Product name"
                         label="Product Name"
                         onChange={changeHandlerInput}
+                        default={formFields.product_name}
                     />
                     <section className="form__section">
                         <label htmlFor="unit_price" className="form__label">
@@ -207,6 +265,7 @@ function DetailsSection() {
                             min="0"
                             step="0.01"
                             required
+                            defaultValue={formFields.unit_price}
                         />
                     </section>
                     <section className="form__section">
@@ -217,6 +276,15 @@ function DetailsSection() {
                                 defaultValue="true"
                                 onChange={changeHandlerInput("is_available")}
                                 row
+                                // defaultValue={
+                                //     formFields.is_available == 1 ? true : false
+                                // }
+                                value={
+                                    formFields.is_available == 1 ||
+                                    formFields.is_available == true
+                                        ? "true"
+                                        : "false"
+                                }
                             >
                                 <FormControlLabel
                                     value="true"
@@ -239,6 +307,7 @@ function DetailsSection() {
                         placeholder="Product description"
                         label="Description"
                         onChange={changeHandlerInput}
+                        default={formFields.product_description}
                     />
                     <FormInput
                         type="text"
@@ -247,6 +316,7 @@ function DetailsSection() {
                         placeholder="Product image URL"
                         label="Image"
                         onChange={changeHandlerInput}
+                        default={formFields.product_image}
                     />
                     <button type="submit" className="form__submit">
                         Save Record
@@ -270,6 +340,7 @@ function FormInput(props) {
                 placeholder={props.placeholder}
                 onChange={props.onChange(props.name)}
                 required
+                defaultValue={props.default}
             />
         </section>
     );

@@ -36,7 +36,8 @@ function AddMenu() {
 
     function DropdownItem(props) {
         return (
-            <Link to={`${url}/${props.to}`}>
+            // <Link to={`${url}/${props.to}`}>
+            <Link to={"/admin/products/item/add"}>
                 <div className="add__item">
                     <p>{props.action}</p>
                 </div>
