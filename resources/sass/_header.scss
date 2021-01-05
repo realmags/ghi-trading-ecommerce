@@ -55,13 +55,14 @@
         input {
             border: 2px solid $red;
             height: $search-bar-size;
-            padding: 0 10px;
+            padding: 0 40px;
             border-radius: 5px;
             font-family: $font;
+            font-size: 1rem;
         }
 
         input:focus ~ button {
-            display: none;
+            // display: none;
         }
 
         button {
@@ -70,10 +71,11 @@
             height: $search-bar-size;
             padding: 10px;
             top: 0;
-            right: 0px;
+            // right: 0px;
             display: flex;
             justify-content: center;
             align-items: center;
+            cursor: pointer;
 
             span > svg {
                 // color: $red;
@@ -92,14 +94,32 @@
         max-height: 300px;
         width: 100%;
         overflow-y: scroll;
+        z-index: 1000;
+        box-shadow: $mild-shadow;
+        border: 2px solid $red;
+
+        &::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: $light-gray;
+            border-radius: 5px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background-color: white;
+            border-radius: 5px;
+        }
 
         .result__item {
             padding: 5px 10px;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid $red;
+            margin: 10px;
 
             div {
                 display: flex;

@@ -38,6 +38,12 @@ $add-container-size: 65px;
         width: 100%;
         height: 80px;
         background: gray;
+        overflow: hidden;
+    }
+
+    &__image > img {
+        object-fit: scale-down;
+        object-position: center;
     }
 
     &__name {

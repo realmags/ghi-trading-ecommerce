@@ -53,10 +53,14 @@ function SearchBar() {
 
         // @desc query must be at least 3 characters
         if (queryParameter.length < 3) {
-            return;
+            return setSearchResults([DEFAULT_RESULT_ITEM]);
         }
 
-        const searchResponse = await getSearchResults(queryParameter);
+        // const searchResponse = await getSearchResults(queryParameter);
+        const searchResponse = await getSearchResults({
+            method: "get",
+            url: `/api/products/?search=${queryParameter}`
+        });
         if (searchResponse.error) return setSearchResults([ERROR_RESULT]);
         setSearchResults(searchResponse.data);
     };
@@ -84,7 +88,10 @@ function SearchBar() {
                     ) : (
                         searchResults.map((product, index) => {
                             return (
-                                <Link to={`/`} key={`product#${index}`}>
+                                <Link
+                                    to={`/admin/products/item/update/${product.product_id}`}
+                                    key={`product#${index}`}
+                                >
                                     <ResultItem product={product} />
                                 </Link>
                             );

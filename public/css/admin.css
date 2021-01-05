@@ -48,26 +48,23 @@
 
 .header__search input {
   border: 2px solid #d10d0d;
-  height: 35px;
-  padding: 0 10px;
+  height: 50px;
+  padding: 0 40px;
   border-radius: 5px;
   font-family: "Century Gothic";
-}
-
-.header__search input:focus ~ button {
-  display: none;
+  font-size: 1rem;
 }
 
 .header__search button {
   background: transparent;
   position: absolute;
-  height: 35px;
+  height: 50px;
   padding: 10px;
   top: 0;
-  right: 0px;
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .header__search button span > svg {
@@ -84,15 +81,33 @@
   max-height: 300px;
   width: 100%;
   overflow-y: scroll;
+  z-index: 1000;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.08);
+  border: 2px solid #d10d0d;
+}
+
+.header .result::-webkit-scrollbar {
+  width: 5px;
+}
+
+.header .result::-webkit-scrollbar-thumb {
+  background-color: #efefef;
+  border-radius: 5px;
+}
+
+.header .result::-webkit-scrollbar-track {
+  background-color: white;
+  border-radius: 5px;
 }
 
 .header .result .result__item {
   padding: 5px 10px;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #d10d0d;
+  margin: 10px;
 }
 
 .header .result .result__item div {
@@ -182,6 +197,14 @@
   width: 100%;
   height: 80px;
   background: gray;
+  overflow: hidden;
+}
+
+.product__image > img {
+  -o-object-fit: scale-down;
+     object-fit: scale-down;
+  -o-object-position: center;
+     object-position: center;
 }
 
 .product__name {

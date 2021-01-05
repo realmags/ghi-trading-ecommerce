@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import SearchBar from "./SeachBar";
+import SearchBar from "./SearchBar";
 
 function Header({ assetPath }) {
     const [username, setUsername] = useState("admin");

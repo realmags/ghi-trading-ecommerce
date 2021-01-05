@@ -27,10 +27,11 @@ const axiosRequest = () => async (config = {}) => {
 };
 
 // TODO: TEST WITH DATABASE ON
-export const getSearchResults = axiosRequest({
-    method: "get",
-    url: "/api/products/?search="
-});
+// export const getSearchResults = axiosRequest({
+//     method: "get",
+//     url: "/api/products/?search="
+// });
+export const getSearchResults = axiosRequest();
 
 // TODO: TEST, USE ASYNC AWAIT FOR IMPLEMENTATION
 // async in usestate, await the variable state
