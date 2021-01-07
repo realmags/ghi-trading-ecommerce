@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use \DB;
 
 class ProductController extends Controller
 {
@@ -94,5 +95,46 @@ class ProductController extends Controller
         return \response()->json([
             'message' => "Product with ID $product_id deleted."
         ], 200);
+    }
+
+    /*
+    * @desc delete a single product record
+    TODO: TEST API
+    */
+    public function bestsellers() {
+        $bestsellers = [];
+        $query = DB::table('product_orders')
+                        // ->select('*')
+                        ->select('product_orders.product_id',
+                        // 'products.product_name',
+                        // 'categories.category_name',
+                        // 'brands.brand_name',
+                        // 'products.product_image',
+                        DB::raw('SUM(product_orders.item_qty) AS items_sold'))
+                        ->join('orders', 'product_orders.order_id', '=', 'orders.order_id')
+                        ->join('products', 'product_orders.product_id', '=', 'products.product_id')
+                        // ->join('brands', 'products.brand_id', '=', 'brands.brand_id')
+                        // ->join('categories', 'products.category_id', '=', 'categories.category_id')
+                        ->where('orders.order_status', '=', 'COMPLETED')
+                        ->groupBy('product_orders.product_id')
+                        ->get();
+
+        foreach ($query as $item) {
+            $product = \json_decode(\json_encode($item), true);
+            $product_id = $product['product_id'];
+            $items_sold = $product['items_sold'];
+            $product_details = Product::select('product_id', 'category_name', 'brand_name', 'product_name', 'product_image')
+                                    ->join('categories', 'products.category_id', '=', 'categories.category_id')
+                                    ->join('brands', 'products.brand_id', '=', 'brands.brand_id')
+                                    ->where('product_id', '=', $product_id)
+                                    ->get();
+            $array_to_push = $product_details->toArray()[0];
+            $array_to_push['items_sold'] = \intval($items_sold);
+            \array_push($bestsellers, $array_to_push);
+        }
+        // dump($bestsellers);
+        // dump(json_encode($bestsellers));
+        // return $query->toJson();
+        return \json_encode($bestsellers);
     }
 }
