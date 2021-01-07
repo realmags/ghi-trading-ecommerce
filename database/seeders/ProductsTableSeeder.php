@@ -25,7 +25,7 @@ class ProductsTableSeeder extends Seeder
             'Sanitizing Mat',
             'Orbit Fan',
             'Dust Extractor',
-            'Magnetic Screwdriver',
+            'Screwdriver',
             'Cutter Blade',
             'Hacksaw Frame'
         ];
