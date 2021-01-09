@@ -123,7 +123,7 @@ class ProductController extends Controller
             $product = \json_decode(\json_encode($item), true);
             $product_id = $product['product_id'];
             $items_sold = $product['items_sold'];
-            $product_details = Product::select('product_id', 'category_name', 'brand_name', 'product_name', 'product_image')
+            $product_details = Product::select('product_id', 'category_name', 'brand_name', 'product_name', 'product_image', 'unit_price')
                                     ->join('categories', 'products.category_id', '=', 'categories.category_id')
                                     ->join('brands', 'products.brand_id', '=', 'brands.brand_id')
                                     ->where('product_id', '=', $product_id)

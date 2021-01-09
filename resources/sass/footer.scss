@@ -1,0 +1,32 @@
+.footer {
+    display: grid;
+    // grid-template-columns: min-content auto;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    background-color: $dark-gray;
+    color: white;
+    padding: 10px 20px;
+    font-size: 14px;
+    margin-top: 40px;
+    // align-items: center;
+
+    ul {
+        font-size: 0.9em;
+        list-style: none;
+        display: contents;
+    }
+
+    .footer__logo > img {
+        height: 120px;
+        width: 120px;
+    }
+
+    .footer__logo {
+        font-size: 0.8em;
+    }
+
+    .footer__customer,
+    .footer__ghi,
+    .footer__social {
+        margin-top: 20px;
+    }
+}

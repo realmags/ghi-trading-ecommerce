@@ -1,18 +1,33 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useRouteMatch } from "react-router-dom";
+import { getCategories } from "./controller";
 
 function InventorySection() {
-    const [categories, setCategories] = useState([]);
+    const [categories, setCategories] = useState(null);
     const CATEGORIES_ENDPOINT = "/api/categories/";
+    const NO_CATEGORY = {
+        category_id: "#",
+        category_name: "NULL"
+    };
+    const DEFAULT_CATEGORY = {
+        category_id: "#",
+        category_name: "Loading..."
+    };
 
     useEffect(() => {
-        axios.get(CATEGORIES_ENDPOINT).then(
-            response => {
-                setCategories(response.data);
-            },
-            error => console.log(error)
-        );
+        const awaitCategories = async () => {
+            try {
+                const categories = await getCategories({
+                    method: "get",
+                    url: "api/categories"
+                });
+                setCategories(categories.data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        awaitCategories();
     }, []);
 
     return (
@@ -22,13 +37,10 @@ function InventorySection() {
             </div>
             <div className="max-view">
                 {(function() {
+                    if (!categories)
+                        return <CategoryCard category={DEFAULT_CATEGORY} />;
                     if (categories.length === 0) {
-                        return (
-                            <CategoryCard
-                                category={{ name: "Category" }}
-                                count={1}
-                            />
-                        );
+                        return <CategoryCard category={NO_CATEGORY} />;
                     }
                     return categories.map((category, index) => (
                         <CategoryCard

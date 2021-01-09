@@ -53,7 +53,7 @@ function CategorySection() {
                             product_name: "No result",
                             product_description: "",
                             produt_image: "#",
-                            product_price: 108,
+                            unit_price: 108,
                             product_brand: ""
                         }}
                         setRefresh={setRefresh}
@@ -83,7 +83,7 @@ export function BackButton() {
     );
 }
 
-function ProductCard({ product, setRefresh, refresh }) {
+export function ProductCard({ product, setRefresh, refresh }) {
     return (
         <div className="card product">
             <div className="product__card">
@@ -100,14 +100,22 @@ function ProductCard({ product, setRefresh, refresh }) {
                 <div className="product__price">
                     <strong>P{product.unit_price}</strong>
                 </div>
+                {product.items_sold && (
+                    <div className="product__sold">
+                        <strong>{product.items_sold} sold</strong>
+                    </div>
+                )}
             </div>
             <EditButton productId={product.product_id} />
-            <DeleteButton
-                productId={product.product_id}
-                setRefresh={setRefresh}
-                refresh={refresh}
-            />
-            {!product.is_available && <ProductOverlay />}
+            {!product.items_sold && (
+                <DeleteButton
+                    productId={product.product_id}
+                    setRefresh={setRefresh}
+                    refresh={refresh}
+                />
+            )}
+            {!product.is_available ||
+                (product.items_sold && <ProductOverlay />)}
         </div>
     );
 

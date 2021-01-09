@@ -59,6 +59,8 @@ export const addBrand = axiosRequest();
 
 export const addCategory = axiosRequest();
 
+export const getBestsellers = axiosRequest();
+
 export const extractOptions = (response, key) => {
     let options = [];
     const { data, status } = response;

@@ -29,7 +29,7 @@ function AddMenu() {
         return (
             <div className="add__dropdown" ref={dropdownRef}>
                 <DropdownItem action="Product record" to="products/item/add" />
-                <DropdownItem action="Staff account" to="" />
+                {/* <DropdownItem action="Staff account" to="" /> */}
             </div>
         );
     }

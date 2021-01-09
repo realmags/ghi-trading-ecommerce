@@ -11,6 +11,8 @@ import InventorySection from "./InventorySection";
 import CategorySection from "./CategorySection";
 import AddMenu from "./AddMenu";
 import DetailsSection from "./DetailsSection";
+import SalesSection from "./SalesSection";
+import Footer from "./Footer";
 
 function Admin({ assetPath }) {
     const { path, url } = useRouteMatch();
@@ -21,8 +23,9 @@ function Admin({ assetPath }) {
                 {/* @desc index for admin dashboard */}
                 <Route exact path={path}>
                     <InventorySection />
-                    <h3>test route</h3>
-                    <Link to={`${url}/products/item/add`}>test</Link>
+                    <SalesSection />
+                    {/* <h3>test route</h3> */}
+                    {/* <Link to={`${url}/products/item/add`}>test</Link> */}
                     {/* fix absolute path for AddMenu */}
                     <AddMenu />
                 </Route>
@@ -52,6 +55,7 @@ function Admin({ assetPath }) {
                     <h3>update product record</h3>
                 </Route> */}
             </Switch>
+            <Footer assetPath={assetPath} />
         </>
     );
 }
