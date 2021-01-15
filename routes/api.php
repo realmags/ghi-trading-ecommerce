@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,3 +84,5 @@ Route::delete('products/item/delete/{product_id}', [ProductController::class, 'd
 TODO: CREATE BESTSELLERS FUNCTION IN PRODUCT CONTROLLER
 */
 Route::get('products/bestsellers/', [ProductController::class, 'bestsellers']);
+
+Route::post('login/', [UserController::class, 'login']);
